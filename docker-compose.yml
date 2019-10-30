@@ -1,0 +1,17 @@
+version: '2'
+services:
+  database:
+    image: mongo:3.4
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+  app:
+    build: app
+    depends_on: [database]
+    links:
+      - database
+    ports:
+      - "5000:5000"
+    environment:
+      MONGODB_URL: 'mongodb://admin:password@database:27017/admin'
